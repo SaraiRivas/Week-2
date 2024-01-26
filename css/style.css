@@ -1,0 +1,107 @@
+.body {
+  font-family: "Arial", sans-serif;
+  background-color: #3498db;
+  color: #fff;
+  text-align: center;
+  margin: 30px;
+}
+
+.weather_container {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 70px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.city_name {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.temperature {
+  font-size: 3em;
+  margin-bottom: 20px;
+  color: #e74c3c;
+}
+
+.degrees {
+  font-size: 1em;
+}
+
+.current_time {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  color: #7f8c8d;
+}
+
+.forecast_container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.forecast_day {
+  flex: 1;
+  padding: 15px;
+  background-color: #3498db;
+  border-radius: 10px;
+}
+
+.day_name {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.temp_range {
+  font-size: 1.2em;
+  color: #fff;
+}
+
+.forecast_day img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.details_container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.detail_item {
+  flex: 1;
+  padding: 15px;
+  background-color: #3498db;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.detail_name {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.detail_value {
+  font-size: 1.5em;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .weather_container {
+    padding: 10px;
+  }
+
+  .forecast_container {
+    flex-direction: column;
+  }
+
+  .forecast_day,
+  .detail_item {
+    margin-bottom: 15px;
+  }
+}
