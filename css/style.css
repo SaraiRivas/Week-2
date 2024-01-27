@@ -1,15 +1,21 @@
 .body {
+    width: 90%;
+    height: 100px;
+    padding: 5px;
   font-family: "Arial", sans-serif;
-  margin: 30px;
+  margin: 0 auto;
   text-align: center;
   background: radial-gradient(
     circle at 4.3% 10.7%,
     rgb(138, 118, 249) 13.6%,
     rgb(75, 252, 235) 100.7%
-  )
+  );
+    
 }
 
 .weather_container {
+    position:relative;
+    bottom: 22px;
   max-width: 800px;
   margin: 20px auto;
   background-color: #fff;
@@ -51,6 +57,7 @@
   padding: 15px;
   background-color: #93e9f5;
   border-radius: 10px;
+  margin: 2px;
 }
 
 .day_name {
@@ -81,6 +88,7 @@
   background-color: #e1ec40;
   border-radius: 10px;
   margin-bottom: 20px;
+  margin: 5px;
 }
 
 .detail_name {
@@ -100,6 +108,8 @@
 }
 
 .locationInput {
+    position: relative;
+    bottom: 30px;
     width: calc(100% - 40px);
     padding: 10px;
     margin-bottom: 0;
@@ -109,20 +119,20 @@
     box-sizing: border-box;
   }
 
-  .searchButton {
+  .button {
+    position: relative;
+    bottom: 20px;
     border: none;
     border-radius: 10px;
     padding: 10px 15px;
     background-color: #b8b0e0;
     box-shadow: 2px 2px 5px #3f193f36;
-    transition: all 0.5s ease;
-    margin-top: 10px;
     font-size: 20px;
     font-weight: bold;
     vertical-align: bottom;
   }
 
-  .searchButton:hover {
+  .button:hover {
     background-color: #3732a1d0;
     color: #fff;
   }
@@ -141,7 +151,7 @@
     margin-bottom: 15px;
   }
 
-  #locationInput {
+  .locationInput {
     margin-bottom: 10px;
   }
 }

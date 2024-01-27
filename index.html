@@ -4,18 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/style.css" rel="stylesheet" />
-
     <title>Week 2</title>
   </head>
 
   <body class="body">
     <div class="weather_container">
-        <input type="text"  class="locationInput" id="locationInput" placeholder="Search for a location" />
-        <button class="searchButton">
-            search city
-          </button>
-      <h2 class="city_name">San Francisco</h2>
-      <div class="temperature">
+        <input type="text" class="locationInput" id="locationInput" placeholder="Search for a location"/>
+        <button type="button" class="button" id="button" onclick="searchCity()">Search city</button>
+      <h2 class="city_name" id="city_name">San Francisco</h2>
+      <div class="temperature" id="temperature">
         12 <span class="degrees">°C</span>/<span class="degrees">°F</span>
       </div>
       <time class="current_time">Thursday 21:21</time>
