@@ -1,12 +1,121 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   const apiKey = "3ad31ff726014559a2a20337242601";
   const inputText = document.getElementById("input_text");
   const searchButton = document.querySelector(".searchButton");
+  const suggestionsList = document.querySelector(".suggestions-list");
 
-  searchButton.addEventListener("click", async function () {
+  function debounce(func, delay) {
+    let timeout;
+    return function () {
+      const context = this;
+      const args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(function () {
+        func.apply(context, args);
+      }, delay);
+    };
+  }
+
+  async function setupAutoComplete() {
+    inputText.addEventListener(
+      "input",
+      debounce(async function () {
+        const city = inputText.value.trim();
+
+        if (city.length > 0) {
+          const suggestions = await getAutoCompleteSuggestions(city);
+          displaySuggestions(suggestions);
+        } else {
+          suggestionsList.innerHTML = "";
+        }
+      }, 300)
+    );
+  }
+
+  async function handleSearchButtonClick() {
     const city = inputText.value.trim();
     await updateWeather(city);
-  });
+  }
+
+  async function handleInputTextChange() {
+    const city = inputText.value.trim();
+
+    if (city.length > 0) {
+      const suggestions = await getAutoCompleteSuggestions(city);
+      displaySuggestions(suggestions);
+    } else {
+      console.log("Query is empty. No autocomplete suggestions.");
+    }
+  }
+
+  function handleInputTextFocus() {
+    suggestionsList.style.display = "block";
+  }
+
+  function handleInputTextBlur() {
+    setTimeout(() => {
+      suggestionsList.style.display = "none";
+    }, 200);
+  }
+
+  function handleSuggestionsListClick(event) {
+    if (event.target.tagName === "LI") {
+      const selectedCity = event.target.textContent;
+      inputText.value = selectedCity;
+      suggestionsList.innerHTML = "";
+      updateWeather(selectedCity);
+    }
+  }
+
+  searchButton.addEventListener("click", handleSearchButtonClick);
+
+  inputText.addEventListener("input", debounce(handleInputTextChange, 300));
+  inputText.addEventListener("focus", handleInputTextFocus);
+  inputText.addEventListener("blur", handleInputTextBlur);
+
+  if (suggestionsList) {
+    suggestionsList.addEventListener("click", handleSuggestionsListClick);
+  }
+
+  async function getAutoCompleteSuggestions(query) {
+    try {
+      if (!query.trim()) {
+        console.error("Error: Query is empty.");
+        return [];
+      }
+
+      const apiUrl = `http://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${encodeURIComponent(
+        query
+      )}`;
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching autocomplete suggestions:", error);
+      return [];
+    }
+  }
+
+  function displaySuggestions(suggestions) {
+    if (suggestionsList) {
+      suggestionsList.innerHTML = "";
+
+      suggestions.forEach((city) => {
+        const suggestionItem = document.createElement("li");
+        suggestionItem.textContent = `${city.name}, ${city.country}`;
+        suggestionsList.appendChild(suggestionItem);
+      });
+
+      suggestionsList.style.display = "block";
+    } else {
+      console.error("Suggestions list element not found in the HTML");
+    }
+  }
 
   async function getWeather(city) {
     const currentUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
@@ -94,66 +203,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function setupAutoComplete() {
-    inputText.addEventListener(
-      "input",
-      debounce(async function () {
-        const city = inputText.value.trim();
-
-        if (city.length > 0) {
-          const suggestions = await getAutoCompleteSuggestions(city);
-          console.log("Suggestions:", suggestions);
-        } else {
-          console.log("Query is empty. No autocomplete suggestions.");
-        }
-      }, 300)
-    );
-  }
-
-  async function getAutoCompleteSuggestions(query) {
-    try {
-      if (!query.trim()) {
-        console.error("Error: Query is empty.");
-        return [];
-      }
-
-      const apiUrl = `http://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${encodeURIComponent(
-        query
-      )}`;
-      const response = await fetch(apiUrl);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error fetching autocomplete suggestions:", error);
-      return [];
-    }
-  }
-
-  function saveLastLocation(location) {
-    localStorage.setItem("lastLocation", location);
-  }
-
-  function loadLastLocation() {
-    return localStorage.getItem("lastLocation") || "San Francisco";
-  }
-
-  function debounce(func, delay) {
-    let timeout;
-    return function () {
-      const context = this;
-      const args = arguments;
-      clearTimeout(timeout);
-      timeout = setTimeout(function () {
-        func.apply(context, args);
-      }, delay);
-    };
-  }
-
   async function updateWeather(city) {
     try {
       const weatherData = await getWeather(city);
@@ -175,12 +224,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  function saveLastLocation(location) {
+    localStorage.setItem("lastLocation", location);
+  }
+
+  function loadLastLocation() {
+    return localStorage.getItem("lastLocation") || "San Francisco";
+  }
+
   async function init() {
+    await setupAutoComplete();
     const defaultLocation = loadLastLocation();
     const weatherData = await getWeather(defaultLocation);
     displayWeather(weatherData);
     displayFiveDayForecast(weatherData.forecast);
-    setupAutoComplete();
   }
 
   init();

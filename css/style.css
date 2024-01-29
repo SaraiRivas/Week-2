@@ -145,3 +145,33 @@
   width: 70px;
   padding: 5px 10px;
 }
+
+.suggestion-list {
+  text-decoration: none;
+}
+
+.suggestions-list {
+  display: none;
+  position: absolute;
+  width: 40%;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  z-index: 1000;
+}
+
+.suggestions-list li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.suggestions-list li:last-child {
+  border-bottom: none;
+}
+
+.suggestions-list li:hover {
+  background-color: #f0f0f0;
+}
