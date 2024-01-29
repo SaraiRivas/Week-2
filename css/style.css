@@ -1,0 +1,173 @@
+.body {
+  width: 90%;
+  height: 100%;
+  margin: 5% auto;
+  background: radial-gradient(
+    circle at 10.3% 10.7%,
+    #602708 30.6%,
+    #ffcf65 100.7%
+  );
+}
+
+.container .card {
+  background: #fff4c4;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px #3f193f36;
+  max-width: 1000px;
+  min-width: 300px;
+  padding: 20px;
+  margin: auto;
+}
+
+.form-group {
+  width: 100%;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.searchButton {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 15px;
+  background-color: #fd6400;
+  box-shadow: 2px 2px 5px #3f193f36;
+  transition: all 0.5s ease;
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  vertical-align: bottom;
+}
+
+.searchButton:hover {
+  background-color: #7a2200;
+  color: #fff;
+}
+
+.city-input {
+  border: none;
+  max-width: 280px;
+  padding: 12px;
+}
+
+.main,
+.other-info {
+  margin: 30px 0;
+  padding: 20px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.main {
+  background: #fff;
+}
+
+.weather-icon,
+.day-info {
+  text-align: center;
+}
+
+.day-info {
+  display: inline-block;
+}
+
+.weather-icon {
+  position: relative;
+  top: 30px;
+  left: 60px;
+  height: 100%;
+  padding: 40px;
+  scale: (5);
+}
+
+.day {
+  display: inline-block;
+  font-size: 40px;
+}
+
+.weekday {
+  display: inline-block;
+}
+
+.weekday small {
+  display: block;
+}
+
+.cel,
+.feh {
+  display: inline-block;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.desc p {
+  font-size: 30px;
+}
+
+.other-info .row {
+  grid-gap: 10%;
+}
+
+.forecast-container {
+  border-bottom: 1px solid #d8d5d5;
+  text-align: center;
+}
+
+.forecast-container:hover {
+  background-color: #ffffffca;
+  cursor: pointer;
+}
+
+.forecast-container i {
+  display: inline-block;
+  text-align: center;
+  padding: 9px;
+  margin: 10px;
+  background: #f8de22;
+  border-radius: 100px;
+}
+
+.forecast-container-des {
+  display: inline-block;
+  width: 200px;
+  text-align: right;
+}
+
+.forecast-container .date {
+  font-weight: bold;
+}
+
+.f-temp {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 10px;
+  width: 70px;
+  padding: 5px 10px;
+}
+
+.suggestions-list {
+  display: none;
+  position: absolute;
+  width: 45%;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  z-index: 1000;
+}
+
+.suggestions-list li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.suggestions-list li:last-child {
+  border-bottom: none;
+}
+
+.suggestions-list li:hover {
+  background-color: #f0f0f0;
+}
