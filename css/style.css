@@ -3,7 +3,7 @@
   height: 100%;
   margin: 5% auto;
   background: radial-gradient(
-    circle at 8.3% 10.7%,
+    circle at 10.3% 10.7%,
     #602708 30.6%,
     #ffcf65 100.7%
   );
@@ -18,15 +18,6 @@
   min-width: 300px;
   padding: 20px;
   margin: auto;
-}
-
-.cityName h1,
-.cityName small {
-  display: inline-block;
-}
-
-.cityName h1 {
-  font-weight: bold;
 }
 
 .form-group {
@@ -81,14 +72,12 @@
 }
 
 .weather-icon {
+  position: relative;
+  top: 30px;
+  left: 60px;
   height: 100%;
   padding: 40px;
-}
-
-.weather-icon .far {
-  background: #f8de22;
-  border-radius: 50%;
-  padding: 20px;
+  scale: (5);
 }
 
 .day {
@@ -119,80 +108,32 @@
   grid-gap: 10%;
 }
 
-.rainChance,
-.uv-info {
-  padding-top: 10px;
-  border-radius: 10px;
-  width: 45%;
-  font-weight: bold;
-  transition: transform 0.5s ease;
-}
-
-.rainChance:hover,
-.uv-info:hover {
-  transform: scale(1.1);
-}
-
-.rainChance {
-  background: #595861;
-  text-align: center;
-  padding-top: 30px;
-  color: #ffe2e7;
-}
-
-.rainChance-num,
-.uv-num {
-  font-weight: bold;
-  font-size: 30px;
-}
-
-.uv-info {
-  text-align: center;
-  padding-top: 20px;
-  background: #fffc9b;
-}
-
-.uv-num,
-.uv-des {
-  color: #ff0000;
-}
-
-.side-info i.fa,
-.side-info i.fas {
-  background-color: #fffd8c;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-}
-
-.side-info {
-  margin: auto;
-}
-
-.forecast {
+.forecast-container {
   border-bottom: 1px solid #d8d5d5;
   text-align: center;
 }
 
-.forecast:hover {
+.forecast-container:hover {
   background-color: #ffffffca;
   cursor: pointer;
 }
 
-.forecast i {
+.forecast-container i {
   display: inline-block;
   text-align: center;
   padding: 9px;
   margin: 10px;
+  background: #f8de22;
+  border-radius: 100px;
 }
 
-.forecast-des {
+.forecast-container-des {
   display: inline-block;
   width: 200px;
   text-align: right;
 }
 
-.forecast .date {
+.forecast-container .date {
   font-weight: bold;
 }
 
