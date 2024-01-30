@@ -24,7 +24,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         if (city.length > 0) {
           const suggestions = await getAutoCompleteSuggestions(city);
-          displaySuggestions(suggestions);
+
+          if (suggestions.length > 0) {
+            displaySuggestions(suggestions);
+          } else {
+            const invalidSuggestions = ["No hay coincidencias encontradas"];
+            displaySuggestions(invalidSuggestions);
+          }
         } else {
           suggestionsList.innerHTML = "";
         }
@@ -42,9 +48,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     if (city.length > 0) {
       const suggestions = await getAutoCompleteSuggestions(city);
-      displaySuggestions(suggestions);
+
+      if (suggestions.length > 0) {
+        displaySuggestions(suggestions);
+      } else {
+        const invalidSuggestions = ["No hay coincidencias encontradas"];
+        displaySuggestions(invalidSuggestions);
+      }
     } else {
       console.log("Query is empty. No autocomplete suggestions.");
+      suggestionsList.innerHTML = "";
     }
   }
 
@@ -105,9 +118,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (suggestionsList) {
       suggestionsList.innerHTML = "";
 
-      suggestions.forEach((city) => {
+      suggestions.forEach((suggestion) => {
         const suggestionItem = document.createElement("li");
-        suggestionItem.textContent = `${city.name}, ${city.country}`;
+        suggestionItem.textContent = suggestion.name
+          ? `${suggestion.name}, ${suggestion.country}`
+          : suggestion;
         suggestionsList.appendChild(suggestionItem);
       });
 
@@ -121,17 +136,31 @@ document.addEventListener("DOMContentLoaded", async function () {
     const currentUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
     const forecastUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=6`;
 
-    const [currentResponse, forecastResponse] = await Promise.all([
-      fetch(currentUrl),
-      fetch(forecastUrl),
-    ]);
+    try {
+      const [currentResponse, forecastResponse] = await Promise.all([
+        fetch(currentUrl),
+        fetch(forecastUrl),
+      ]);
 
-    const currentData = await currentResponse.json();
-    const forecastData = await forecastResponse.json();
+      if (!currentResponse.ok) {
+        throw new Error(`HTTP error! Status: ${currentResponse.status}`);
+      }
 
-    const filteredForecast = forecastData?.forecast?.forecastday.slice(1) || [];
+      if (!forecastResponse.ok) {
+        throw new Error(`HTTP error! Status: ${forecastResponse.status}`);
+      }
 
-    return { current: currentData, forecast: filteredForecast };
+      const currentData = await currentResponse.json();
+      const forecastData = await forecastResponse.json();
+
+      const filteredForecast =
+        forecastData?.forecast?.forecastday.slice(1) || [];
+
+      return { current: currentData, forecast: filteredForecast };
+    } catch (error) {
+      console.error("Error fetching weather data:", error);
+      throw error;
+    }
   }
 
   function displayWeather(data) {
@@ -157,7 +186,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       data.current?.current?.condition?.text || "N/A";
 
     const iconCode = data.current?.current?.condition?.icon;
-    const iconUrl = `https:${iconCode}`;
+    const iconUrl = `http:${iconCode}`;
     currentIconElement.innerHTML = `<img src="${iconUrl}" alt="Weather Icon">`;
   }
 
@@ -188,15 +217,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         const dayOfMonth = forecastDate.getDate();
 
         const iconCode = dayForecast.day?.condition?.icon;
-        const iconUrl = `https:${iconCode}`;
+        const iconUrl = `http:${iconCode}`;
 
         dayElement.innerHTML = `
-                    <img src="${iconUrl}" alt="Weather Icon">
-                    <div class="forecast-des">
-                        <span class="dayofWeek">${dayOfWeek}</span>
-                        <span class="date">${dayOfMonth} ${month}</span>
-                        <p class="f-temp"><span>${dayForecast.day?.maxtemp_c}</span> °C</p>
-                    </div>`;
+                      <img src="${iconUrl}" alt="Weather Icon">
+                      <div class="forecast-des">
+                          <span class="dayofWeek">${dayOfWeek}</span>
+                          <span class="date">${dayOfMonth} ${month}</span>
+                          <p class="f-temp"><span>${dayForecast.day?.maxtemp_c}</span> °C</p>
+                      </div>`;
       }
 
       forecastContainer.appendChild(dayElement);
@@ -242,4 +271,5 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   init();
 });
+
 
