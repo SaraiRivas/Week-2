@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         return [];
       }
 
-      const apiUrl = `http://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${encodeURIComponent(
+      const apiUrl = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${encodeURIComponent(
         query
       )}`;
       const response = await fetch(apiUrl);
@@ -118,8 +118,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   async function getWeather(city) {
-    const currentUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
-    const forecastUrl = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=6`;
+    const currentUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
+    const forecastUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=6`;
 
     const [currentResponse, forecastResponse] = await Promise.all([
       fetch(currentUrl),
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       data.current?.current?.condition?.text || "N/A";
 
     const iconCode = data.current?.current?.condition?.icon;
-    const iconUrl = `http:${iconCode}`;
+    const iconUrl = `https:${iconCode}`;
     currentIconElement.innerHTML = `<img src="${iconUrl}" alt="Weather Icon">`;
   }
 
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const dayOfMonth = forecastDate.getDate();
 
         const iconCode = dayForecast.day?.condition?.icon;
-        const iconUrl = `http:${iconCode}`;
+        const iconUrl = `https:${iconCode}`;
 
         dayElement.innerHTML = `
                     <img src="${iconUrl}" alt="Weather Icon">
@@ -242,3 +242,4 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   init();
 });
+
