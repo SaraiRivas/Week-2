@@ -271,5 +271,3 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   init();
 });
-
-
